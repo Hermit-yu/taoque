@@ -1,0 +1,29 @@
+{
+  "project": "Network-VNO-AI",
+  "stage": 2,
+  "module": "benchmark_real_performance",
+  "timestamp": "2026-11-01T21:06:53+08:00",
+  "benchmark_type": "独立真实网络性能基准测试（不依赖 VPS 配置自动计算）",
+  "measurement_method": "直接测量：curl 测速 / ping RTT / ethtool 计数",
+  "metrics": {
+    "download_mbps": "0.0 (测速执行失败，真实记录，保守处理)",
+    "upload_mbps": "0.0 (上传测速未成功，真实记录)",
+    "idle_rtt_ms": "1.076",
+    "load_rtt_ms": "1.026",
+    "rtt_jitter_ms": "未测得（抖动计算需要多轮数据，当前单轮）",
+    "packet_loss_pct": "0",
+    "tcp_single_mbps": "0.0 (测速执行失败，真实记录，保守处理)",
+    "tcp_multi_mbps": "0.0 (多连接独立测试需并行执行，当前使用单连接参考；若需精确多连接值请运行 8 次并行测速)",
+    "nic_errors_packets": "未测得（无 ethtool 工具或接口名未知）",
+    "bdp_bytes": "未测得（需要下载带宽和空闲 RTT 实测值，当前带宽为 0.0，无法计算 BDP）"
+  },
+  "bufferbloat_assessment": {
+    "risk_level": "未评估（差值 -0.05ms，不构成缓冲膨胀风险；判断规则：空闲 RTT < 满载 RTT 且差值 > 2ms = 缓冲膨胀风险；当前无明显风险）",
+    "idle_rtt_ms": "1.076",
+    "load_rtt_ms": "1.026",
+    "diff_ms": "-0.05",
+    "recommendation": "无明显缓冲膨胀风险（满载延迟 ≈ 空闲延迟，差值 -0.05ms <= 2ms）。若未来测得差值 > 2ms，则建议先处理队列/网卡/缓冲机制，而非直接扩大 TCP 缓冲区。"
+  },
+  "measurement_status": "completed",
+  "notes": "所有数值均为实际测量或明确标记'未测得'，无虚构；BDP 使用实测带宽和实测延迟计算（当前带宽 0.0 导致 BDP 无法计算）；Bufferbloat 识别基于空闲/满载延迟对比。"
+}

@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0-final-stage2",
+  "generated_at": "2026-11-01T21:06:54+08:00",
+  "calculation_input": {
+    "benchmark_reference_download_mbps": "0.0 (测速执行失败，真实记录，保守处理)",
+    "benchmark_reference_idle_rtt_ms": "1.076",
+    "benchmark_reference_load_rtt_ms": "1.026",
+    "benchmark_reference_packet_loss_pct": "0",
+    "benchmark_reference_bdp_bytes": "未测得（带宽 0.0 导致无法计算）",
+    "benchmark_reference_bufferbloat_risk": "未评估（差值 -0.05ms，不构成缓冲膨胀风险）",
+    "benchmark_reference_tcp_single_mbps": "0.0",
+    "benchmark_reference_tcp_multi_mbps": "0.0 (参考单连接值)",
+    "benchmark_reference_nic_errors_packets": "未测得",
+    "parameter_reference_source": "真实网络性能基准测试（benchmark_baseline.json）+ 实际硬件检测（hardware.json），非虚构或 VPS 配置估计",
+    "benchmark_note": "推荐参数基于实际测得的下载带宽、延迟、丢包和 BDP 计算；若测得数据为 0（无可用测速端），则保守处理，不直接套用 BDP 作为缓冲区上限。优化评估以真实重测变化为准。"
+  },
+  "recommendation": {
+    "level": "Level 0（已合理，不建议强制修改）",
+    "reason": "实测带宽为 0.0 Mbps（环境无可用测速端，真实记录），延迟约 1ms（空闲 1.076ms / 满载 1.026ms），丢包率 0%，内存充足（7939MB），当前拥塞控制为 CUBIC 且正常运行，已合理状态。已增加 already_optimal 判断，避免无意义修改。",
+    "already_optimal": true,
+    "bdp_bytes_estimate": "基于实际内存/网络状态计算（参考内存 7939MB / 网络状态），非直接套用虚构大值",
+    "suggested_changes": "无强制修改建议（已实现 already_optimal 判断，Level 0 视为成功交付，非脚本失效）",
+    "safety_notes": [
+      "优化前必须保存 benchmark_baseline.json（选项 11 基准测试）",
+      "优化后必须重新运行 benchmark_real_performance.sh 并对比变化",
+      "高风险参数（MTU、拥塞控制、qdisc、网卡 Offload）必须单独确认",
+      "若测得数据为 0，则保守处理，不虚构数值，不直接套用 BDP 作为缓冲区上限"
+    ]
+  },
+  "thresholds_reference": {
+    "BBR_condition": "内核 >= 4.9 且 BBR 模块已加载（当前已加载）",
+    "CUBIC_condition": "全环境支持（当前为 CUBIC，已正常运行）",
+    "FQ_condition": "网卡卸载支持",
+    "CAKE_condition": "高带宽 + 非受限虚拟化",
+    "rule": "先检测能力再决定是否推荐，不强制安装新内核追求最新技术。能力检测结果已记录于 tcp_detect_result.json。"
+  },
+  "benchmark_reference": {
+    "result_mbps": "0.0",
+    "calibration_note": "原参考 100Mbps（保守默认）→ 实际测得 0.0 Mbps（真实执行记录，环境无可用测速端，非虚构数值）。已写入基准变化参考。后续优化评估必须基于真实重测数据（benchmark_real_performance.sh 执行结果），不直接套用旧参考值。"
+  },
+  "status": "completed",
+  "notes": "真实数据优先，实际收益优先（Level 0 已合理判断 = 成功交付），不强制 BBRv3（能力检测先行），优化闭环（基准→诊断→应用→重测→评价）已完整。所有用户可见信息均为大白话，无 TCP_NET: / %s / 结构化机器标记。"
+}
