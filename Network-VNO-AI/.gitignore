@@ -1,0 +1,14 @@
+# 运行时生成数据（首次运行由各模块生成，不纳入版本库）
+data/*.json
+data/*.sh
+
+# 测试隔离目录
+.test-tmp/
+
+# 备份与日志
+backup/
+logs/*.log
+
+# 操作系统 / 编辑器临时文件
+.DS_Store
+*.swp
